@@ -3,16 +3,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.example.mada_tour.modele.*;
-import com.example.mada_tour.network.ApiService;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.mada_tour.modele.Utilisateur;
 import com.example.mada_tour.network.body.UserData;
 import com.example.mada_tour.network.response.LoginResponse;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginController {
 
@@ -21,43 +27,71 @@ public class LoginController {
     public LoginController(Context context) {
         mContext = context;
     }
-    static String base_url = "http://192.168.43.105:3000/utilisateur/";
-    // Méthode pour effectuer la requête HTTP vers l'API de login en utilisant Retrofit
-    public void performLogin(String username, String password) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(base_url) // Remplacez par l'URL de votre API de login
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        System.out.println("PERFORM LOGIN OPENED "+base_url);
-        ApiService apiService = retrofit.create(ApiService.class);
-        Utilisateur loginRequest = new Utilisateur(username, password); // LoginRequest
-        Call<LoginResponse> call = apiService.performLogin(loginRequest);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.isSuccessful()) {
-                    LoginResponse loginResponse = response.body();
-                    if (loginResponse != null && loginResponse.getStatus().equals("200")) {
-                        // Connexion réussie, affichez le toast et stockez le token dans le local storage
-                        String token = loginResponse.getData().getToken();
-                        saveTokenToLocalStorage(token);
-                        showToast("Connexion réussie!");
-                    } else {
-                        // Afficher un message d'erreur de connexion échouée
-                        showToast("Connexion échouée");
-                    }
-                } else {
-                    // Afficher un message d'erreur de connexion échouée (réponse non réussie)
-                    showToast("Connexion échouée");
-                }
-            }
 
+    static String base_url = "http://192.168.43.105:3000/utilisateur/";
+
+    // Méthode pour effectuer la requête HTTP vers l'API de login en utilisant Volley
+    public void performLogin(String username, String password) {
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+
+        String loginUrl = base_url + "login";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("mail", username);
+            jsonObject.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                loginUrl,
+                jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Traitement de la réponse JSON
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("200")) {
+                                // Connexion réussie, affichez le toast et stockez le token dans le local storage
+                                String token = response.getJSONObject("data").getString("token");
+                                saveTokenToLocalStorage(token);
+                               // showToast("Connexion réussie!");
+                                System.out.println("OK CONNEXION");
+
+                            } else {
+                                // Afficher un message d'erreur de connexion échouée
+                              //  showToast("Connexion échouée");
+                                System.out.println("ECHEC CONNEXION ");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                           // showToast("Erreur lors de la réponse du serveur");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("VOLLEY ERREUR ");
+                        error.printStackTrace();
+                        System.out.println("------------------------------------------------------------");
+//                        showToast("Erreur lors de la connexion");
+                    }
+                }
+        ) {
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                // Gérer les erreurs liées à la requête (par exemple, problème de réseau)
-                showToast("Erreur lors de la connexion");
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Si vous avez besoin d'envoyer des en-têtes supplémentaires avec la requête, vous pouvez le faire ici
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
             }
-        });
+        };
+
+        requestQueue.add(jsonObjectRequest);
     }
 
     // Méthode pour afficher un toast
@@ -73,7 +107,4 @@ public class LoginController {
         editor.putString("token", token);
         editor.apply();
     }
-
 }
-
-

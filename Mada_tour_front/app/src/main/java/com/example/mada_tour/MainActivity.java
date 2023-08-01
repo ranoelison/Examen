@@ -1,55 +1,48 @@
 package com.example.mada_tour;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.example.mada_tour.vue.LoginActivity;
+import com.example.mada_tour.databinding.ActivityMainBinding;
+import com.example.mada_tour.fragments.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    ActivityMainBinding binding;
+
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // Liez la Toolbar à l'activité
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
-        // Pour activer le bouton "Retour" dans la Toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Pour ajouter un événement de clic sur la Toolbar
-        toolbar.setNavigationOnClickListener(view -> {
-            // Définir l'action lorsque la Toolbar est cliquée (retour, par exemple)
-            onBackPressed();
-        });
-
-
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_login) {
-            // Lorsque l'élément "Login" de la Toolbar est sélectionné,
-            // lancez l'activité ActivityLogin
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            int itemId = item.getItemId();
+            if (itemId == R.id.home) {
+                replaceFragment(new HomeFragment());
+            } else if (itemId == R.id.activites) {
+                replaceFragment(new ActivitiesFragment());
+            } else if (itemId == R.id.settings) {
+                replaceFragment(new SettingsFragment());
+            } else if (itemId == R.id.login) {
+                replaceFragment(new LoginFragment());
+            }
             return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        });
+//        setContentView(R.layout.activity_main);
     }
 
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+    }
 }
