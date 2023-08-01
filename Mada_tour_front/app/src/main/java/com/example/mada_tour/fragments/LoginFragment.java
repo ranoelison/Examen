@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mada_tour.R;
@@ -83,7 +86,7 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.loginPassword);
         login = view.findViewById(R.id.loginButton);
 
-        // Ajouter un gestionnaire de clic au bouton
+        // Appel de l'action login
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +100,24 @@ public class LoginFragment extends Fragment {
                     //Toast.makeText(getApplicationContext(), "login method to proceed", Toast.LENGTH_SHORT).show();
                     performLogin(userVar, passVar);
                 }
+            }
+        });
+
+        //vers inscription
+
+        TextView textViewSignup = view.findViewById(R.id.textViewSignup);
+
+
+        textViewSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                InscriptionFragment fragmentInscription = new InscriptionFragment();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, fragmentInscription);
+                fragmentTransaction.addToBackStack(null); // ajouter la transaction à la pile pour revenir en arrière
+                fragmentTransaction.commit();
             }
         });
     }
