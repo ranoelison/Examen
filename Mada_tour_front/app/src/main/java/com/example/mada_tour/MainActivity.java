@@ -10,6 +10,8 @@ import android.os.Bundle;
 
 import com.example.mada_tour.databinding.ActivityMainBinding;
 import com.example.mada_tour.fragments.LoginFragment;
+import com.example.mada_tour.notification.NotificationHelper;
+import com.example.mada_tour.notification.NotificationUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NotificationHelper notifHelper = new NotificationHelper();
+        notifHelper.createNotificationChannels(this);
+        NotificationUtils notif = new NotificationUtils();
+        notif.showNotification(this);
+        //
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());

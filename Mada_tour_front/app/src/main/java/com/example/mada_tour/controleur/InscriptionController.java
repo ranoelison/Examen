@@ -1,7 +1,10 @@
 package com.example.mada_tour.controleur;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -11,9 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mada_tour.R;
-import com.example.mada_tour.modele.Utilisateur;
-import com.example.mada_tour.network.body.UserData;
-import com.example.mada_tour.network.response.LoginResponse;
+import com.example.mada_tour.notification.NotificationHelper;
+import com.example.mada_tour.notification.NotificationUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,34 +23,38 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginController {
-
+public class InscriptionController {
     private Context mContext;
     private String base_url;
-    public LoginController(Context context) {
+
+    public InscriptionController(Context context) {
         mContext = context;
         base_url = context.getString(R.string.base_url_user);
     }
 
+    public void performSignUp(String nom, String prenom ,String mail,String password,String confPassword,String date_naissance) {
 
-
-    // Méthode pour effectuer la requête HTTP vers l'API de login en utilisant Volley
-    public void performLogin(String username, String password) {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
 
-        String loginUrl = base_url + "login";
+        String WSUrl = base_url + "inscription";
+        System.out.println("URL"+WSUrl);
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("mail", username);
+            jsonObject.put("nom", nom);
+            jsonObject.put("prenom", prenom);
+            jsonObject.put("mail", mail);
             jsonObject.put("password", password);
+            jsonObject.put("confirmPassword", confPassword);
+            jsonObject.put("date_naissance", date_naissance);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        System.out.println("----------------jsonObject---------------");
+        System.out.println(jsonObject);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,
-                loginUrl,
+                WSUrl,
                 jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -57,20 +63,22 @@ public class LoginController {
                         try {
                             String status = response.getString("status");
                             if (status.equals("200")) {
-                                // Connexion réussie, affichez le toast et stockez le token dans le local storage
+
                                 String token = response.getJSONObject("data").getString("token");
                                 saveTokenToLocalStorage(token);
-                               // showToast("Connexion réussie!");
-                                System.out.println("OK CONNEXION");
+                                //showToast("Connexion réussie!");
+                                //--redirection vers dernier fragment used
+                                //notif
+                                NotificationUtils notificationUtils = new NotificationUtils();
+                                notificationUtils.showSignUpNotification(mContext);
 
                             } else {
-                                // Afficher un message d'erreur de connexion échouée
-                              //  showToast("Connexion échouée");
-                                System.out.println("ECHEC CONNEXION ");
+                                throw new Exception(
+                                        "Status"+response.getString("status")+"-"+response.getString("message")
+                                );
                             }
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
-                           // showToast("Erreur lors de la réponse du serveur");
                         }
                     }
                 },
