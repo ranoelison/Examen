@@ -9,6 +9,7 @@ class Utilisateurs {
     _mail;
     _password;
     _date_inscription;
+    _date_naissance;
     _mode;
 
     constructor() {}
@@ -46,8 +47,8 @@ class Utilisateurs {
         this._prenom = value;
     }
 
-    get nom(){
-        return this._nom;
+    get prenom(){
+        return this._prenom;
     }
     set nom(value){
         if(this._mode === "update"){
@@ -93,6 +94,17 @@ class Utilisateurs {
     get date_inscription(){
         return this._date_inscription;
     }
+    set date_naissance(value){
+        if(this._mode === "update"){
+            if(util.isBlank(value)){
+                throw 'champ `_date_naissance` vide.';
+            }
+        }
+        this._date_naissance = value;
+    }
+    get date_naissance(){
+        return this._date_naissance;
+    }
     async insert(){
         const customer =  await UtilisateursModel.findOne({
             mail : this._mail
@@ -105,6 +117,7 @@ class Utilisateurs {
             prenom:this._prenom,
             mail: this._mail,
             password: sha1(this._password),
+            date_naissance: new Date(this._date_naissance),
             date_inscription: new Date(this._date_inscription)
         });
 

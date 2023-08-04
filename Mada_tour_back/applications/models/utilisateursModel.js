@@ -6,6 +6,7 @@ var utilisateursSchema = new Schema({
     "prenom":String,
     "mail": String,
     "password":String,
+    "date_naissance":Date,
     "date_inscription": Date
 });
 

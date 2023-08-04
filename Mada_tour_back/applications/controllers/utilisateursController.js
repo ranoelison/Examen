@@ -57,7 +57,7 @@ module.exports = {
         }
     },
     signin:  async function (req, res) {
-        const {nom,prenom, mail, password,confirmPassword,date_inscription} = req.body;
+        const {nom,prenom, mail, password,confirmPassword,date_naissance} = req.body;
         try {
             if(password!=confirmPassword){
                 throw "Erreur de confirmation mot de passe";
@@ -70,18 +70,24 @@ module.exports = {
             utilisateur.mail = mail;
             utilisateur.password = password;
             utilisateur.confirmPassword = confirmPassword;
-            utilisateur.date_inscription = date_inscription;
+            utilisateur.date_naissance = date_naissance;
+            utilisateur.date_inscription =  new Date().toString();;
             //preparing mail
             //var subject = "Inscription sur MadaTour";
             //var mailContent = "Bienvenue "+nom+" "+prenom+"!";
            // mailContent = "".concat(mailContent,"<p>Votre compte MadaTour a été créé avec succès.</p>");
            // mailContent = "".concat(mailContent,"<p style='font-size:10px;'><b>MT</b></p><p style='font-size:8px;'><b>Rue L'Espoir,007Tana</b></p>");
-            utilisateur.insert().then(resp => {
+          
+           utilisateur.insert().then(resp => {
                 //mailHelper.sendMail(receiver.mail,subject,mailContent);
+                const token = resp._id+"_"+now().toString();
                 const response ={
                     status:"200",
                     message:"OK ",
-                    data: resp
+                    data:  {
+                        user : utilisateur,
+                        token : token
+                    }
                 };
                 res.json(response);
                 res.status(200);
