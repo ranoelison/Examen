@@ -5,21 +5,31 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.VideoView;
 
+import com.example.mada_tour.controlleur.ActiviteController;
 import com.example.mada_tour.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-    @SuppressLint("NonConstantResourceId")
+    VideoView videoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+//        setContentView(R.layout.activity_main);
+
         setContentView(binding.getRoot());
+
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -33,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-//        setContentView(R.layout.activity_main);
+
+
+
     }
 
     private void replaceFragment(Fragment fragment){
@@ -42,4 +54,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
     }
+
 }
