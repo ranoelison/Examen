@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.example.mada_tour.databinding.ActivityMainBinding;
+import com.example.mada_tour.fragments.FicheActiviteFragment;
 import com.example.mada_tour.fragments.LoginFragment;
 import com.example.mada_tour.notification.NotificationHelper;
 import com.example.mada_tour.notification.NotificationUtils;
@@ -35,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.home) {
                 replaceFragment(new HomeFragment());
             } else if (itemId == R.id.activites) {
-                replaceFragment(new ActivitiesFragment());
+               replaceFragment(new ActivitiesFragment());
+                //ici exemple comment appeler la fiche activite
+                //appel new instance pas le constructeur
+               // replaceFragment(new FicheActiviteFragment().newInstance("64ce0b8de7b9887a0eb711a1"));
             } else if (itemId == R.id.settings) {
                 replaceFragment(new SettingsFragment());
             } else if (itemId == R.id.login) {

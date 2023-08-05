@@ -1,10 +1,11 @@
-const activiteModel = require('../models/Activite.js');
+const ActiviteModel = require('../models/activiteModel.js');
 const Activite = require('../classes/Activite.js');
 const Avis = require('../classes/Avis.js');
 
 const sha1 = require('sha1');
 const { last } = require('lodash');
 const { now } = require('lodash');
+const activiteModel = require('../models/activiteModel.js');
 
 /**
  * activiteController.js
@@ -13,10 +14,47 @@ const { now } = require('lodash');
  * 
  */
 module.exports = {
+    getActiviteById: async function (req, res) {
+        try {
+            const activite_id = req.params.activite_id;
+            const query = {
+                _id: activite_id
+            };
+            console.log(query);
+            const activiteFiche = await ActiviteModel.findOne(query).exec();
+            if (!activiteFiche) {
+                const respbody = {
+                    status: "404",
+                    message: "Fiche Activite-Not Found",
+                    data: null
+                };
+                res.status(404);
+                return res.json(respbody);
+            }
+            const respbody = {
+                status: "200",
+                message: "OK",
+                data: activiteFiche
+            };
+            res.status(200);
+            console.log(respbody);
+            return res.json(respbody);
+    
+        } catch (error) {
+            console.error(error);
+            const body = {
+                status: "500",
+                message: error.message,
+                data: ""
+            };
+            res.status(500);
+            return res.json(body);
+        }
+    },
     getListAvisByActivite : async function(req,res){
         try {
            
-            const activite_id = req.query.activite_id;
+            const activite_id = req.params.activite_id;
             // || req.body.activite_id;
 
             const avis = await Avis.listAvisByActivite(activite_id);

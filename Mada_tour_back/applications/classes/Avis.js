@@ -1,6 +1,6 @@
 const util = require("../helpers/util.js");
 //const UtilisateursModel = require('../models/utilisateursModel.js');
-const ActiviteModel = require('../models/Activite.js');
+const ActiviteModel = require('../models/activiteModel.js');
 const AvisModel = require('../models/avisModel.js');
 
 
@@ -79,7 +79,7 @@ class Avis {
        
         return  await newAvis.save().then().catch(err => { throw err });
     }
-    async listAvisByActivite(activite_id) {
+    static async listAvisByActivite(activite_id) {
         try {
             const avis = await AvisModel.find({ activite_id: activite_id }).exec();
             return avis;

@@ -10,7 +10,8 @@ const path = require('path');
 
 router.post('/addActivite', activiteController.addActivite);
 
-router.get('/listeAvisActivite',activiteController.getListAvisByActivite);
+router.get('/ficheActivite/:activite_id',activiteController.getActiviteById);
+router.get('/listeAvisActivite/:activite_id',activiteController.getListAvisByActivite);
 router.post('/addAvis', activiteController.addAvis);
 
 

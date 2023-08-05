@@ -1,7 +1,8 @@
 const util = require("../helpers/util.js");
 //const UtilisateursModel = require('../models/utilisateursModel.js');
-const ActiviteModel = require('../models/Activite.js');
+const ActiviteModel = require('../models/activiteModel.js');
 const sha1 = require('sha1');
+const mongoose = require('mongoose');
 
 class Activite {
     _id;
@@ -15,7 +16,7 @@ class Activite {
     _horaires;
     _dayOff;
     _mode;
-    constructor(){}
+    
     constructor(nom, type_activite, region, images_url, description, tarifA, tarifE, horaires, dayOff) {
         this._nom = nom;
         this._type_activite = type_activite;
@@ -105,6 +106,23 @@ class Activite {
 
     get description() {
         return this._description;
+    }
+    ///deprecated by me
+    static async getActivite(activite_id){
+        try{
+           /* console.log("--------Obj Id--------------");
+            const objectId = new mongoose.Types.ObjectId(activite_id);
+            const oneActivite = await ActiviteModel.findById(objectId).exec();*/
+            const query = {
+                _id: activite_id
+            };
+            const oneActivite =  await ActiviteModel.findOne(query);
+            console.log("--------ACTIVITE--------------");
+            console.log(oneActivite);
+            return oneActivite;
+        }catch(error){
+            throw error;
+        }
     }
     async insert(){
        const newActivite = new ActiviteModel({

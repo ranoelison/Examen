@@ -9,6 +9,10 @@ var indexRouter = require('./routes/index');
 
 
 var app = express();
+
+//---server de file
+app.use(express.static('public'));
+//--
 dotenv.config();
 //---cors
 app.use(cors({origin:'*'}));
