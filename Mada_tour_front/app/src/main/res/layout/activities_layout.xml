@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- ImageView pour afficher l'image -->
+    <ImageView
+        android:id="@+id/imageViewActivite"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:src="@drawable/anakaojpg"
+        android:scaleType="centerCrop"
+        android:layout_marginStart="30dp"
+        />
+    <!-- TextView pour afficher la description -->
+    <TextView
+        android:id="@+id/titleActivite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Votre description ici"
+        android:padding="16dp"
+        android:gravity="bottom"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:background="#FFFFFF"
+        android:layout_marginStart="80dp"
+        />
+    <TextView
+        android:id="@+id/region"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Votre description ici"
+        android:padding="16dp"
+        android:gravity="bottom"
+        android:textSize="18sp"
+        android:background="#FFFFFF"
+        android:layout_marginStart="80dp"
+        android:textColor="@color/purple"
+        />
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Votre description ici"
+        android:padding="16dp"
+        android:gravity="bottom"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:background="#FFFFFF"
+        android:layout_marginStart="80dp"
+        />
+</LinearLayout>

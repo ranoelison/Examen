@@ -172,4 +172,12 @@ public class Activite {
         this.horaires = horaires;
         this.dayOff = dayOff;
     }
+
+    public Activite(String id, List<LangueMap> nom, String type_activite, String region, String images_url) {
+        this.id = id;
+        this.nom = nom;
+        this.type_activite = type_activite;
+        this.region = region;
+        this.images_url = images_url;
+    }
 }

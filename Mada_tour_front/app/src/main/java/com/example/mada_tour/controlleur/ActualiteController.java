@@ -38,7 +38,6 @@ public class ActualiteController {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    Toast.makeText(context, "Response :" + response.length(), Toast.LENGTH_LONG).show();//display the response on screen
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject responseObj = response.getJSONObject(i);
                         String id = responseObj.getString("_id");
@@ -49,7 +48,6 @@ public class ActualiteController {
                         Destination destination = new Destination(id, nom, type_activite, region, img_url);
                         destinations.add(destination);
                     }
-                    Toast.makeText(context, "DEST 2 :" + destinations.size(), Toast.LENGTH_LONG).show();
                     destinationCallback.onDestinationListReady(destinations);
                 } catch (Exception exception) {
                     Toast.makeText(context, "Error :" + exception, Toast.LENGTH_LONG).show();//display the response on screen
