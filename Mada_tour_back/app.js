@@ -8,6 +8,8 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const bodyParser = require("body-parser");
 
+
+
 const app = express();
 
 //---server de file
@@ -17,25 +19,21 @@ dotenv.config();
 //---cors
 app.use(cors({origin:'*'}));
 app.use(bodyParser.json());
-
+///
 const db = require("./config/db");
+//---
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-const router = require("./routes/router");
 
 app.use('/', indexRouter);
-
-app.listen(3000, () => {
-  console.log("The server started on port 3000 !!!!!!");
-});
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
