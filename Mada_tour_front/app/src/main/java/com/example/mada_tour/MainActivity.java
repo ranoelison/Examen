@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,6 +18,10 @@ import com.example.mada_tour.notification.NotificationHelper;
 import com.example.mada_tour.notification.NotificationUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    ActivityMainBinding binding;
+
+    VideoView videoView;
 
     ActivityMainBinding binding;
 
@@ -56,4 +63,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
     }
+
 }

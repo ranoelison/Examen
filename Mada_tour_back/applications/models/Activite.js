@@ -20,11 +20,8 @@ const ActiviteSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    "tarifA":Double,
-    "tarifE":Double, // A  : Adulte et E :Enfant
-    "horaires":String, //au format HH:MM-HH:MM
-    "dayOff":String // au format ex ferme le Dimanche et Mardi : data = "0-2" 
+    //   Infos pratiques pour les activites
+
 });
 
-const activiteModel = mongoose.model("Activite", ActiviteSchema,"activite");
-module.exports = activiteModel;
+module.exports = mongoose.model("Activite", ActiviteSchema,"activite");
