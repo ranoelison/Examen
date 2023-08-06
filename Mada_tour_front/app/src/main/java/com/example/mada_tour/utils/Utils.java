@@ -9,7 +9,13 @@ public class Utils {
     public Utils(Context mContext) {
         this.mContext = mContext;
     }
-
+    public boolean isConnected(){
+        if(getToken()!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public String getToken(){
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);

@@ -16,8 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mada_tour.R;
-import com.example.mada_tour.controleur.InscriptionController;
-import com.example.mada_tour.controleur.LoginController;
+import com.example.mada_tour.controlleur.InscriptionController;
+import com.example.mada_tour.controlleur.LoginController;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

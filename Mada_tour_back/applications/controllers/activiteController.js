@@ -77,12 +77,12 @@ module.exports = {
         }
     },
     addAvis : async function(req,res){
-        const {utilisateur_id,activite_id,note,contenu} = req.body
+        const {utilisateurs_id,activite_id,note,contenu} = req.body
         try{
-            const newAvis = new Avis(utilisateur_id,activite_id,note,contenu);
+            const newAvis = new Avis(utilisateurs_id,activite_id,note,contenu,new Date());
            
             newAvis.insert().then(resp => {
-             
+                console.log(newAvis);
                 const response ={
                     status:"200",
                     message:"Ajout OK",
@@ -137,7 +137,9 @@ module.exports = {
                     }
                 };
                 res.json(response);
+               
                 res.status(200);
+                console.log(response);
             }).catch(error => {
                 console.log(error);
                 const body = {

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="RatingBarStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
+    </style>
+
     <style name="FicheTitleText">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#01063F</item>

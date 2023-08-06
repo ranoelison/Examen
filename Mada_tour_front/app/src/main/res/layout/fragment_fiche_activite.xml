@@ -1,32 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
     <!-- Profil Image -->
-    <FrameLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </FrameLayout>
     <ImageView
         android:id="@+id/f_profil_image"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:scaleType="centerCrop"
-        android:src="/" />
+        android:scaleType="centerCrop" />
 
     <WebView
         android:id="@+id/f_nom_activite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/f_profil_image"
-        android:layout_marginTop="8dp"
-        />
-
+        android:layout_marginTop="8dp" />
 
     <!-- Détails -->
 
@@ -48,7 +48,9 @@
         android:textSize="16sp"
         android:layout_below="@id/f_type_activite"
         android:layout_toEndOf="@id/f_profil_image"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp" >
+
+    </WebView>
 
     <WebView
         android:id="@+id/f_description"
@@ -57,7 +59,7 @@
         android:text="Description de l'activité"
         android:textSize="16sp"
         android:layout_below="@id/f_region"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="20dp" />
 
     <WebView
         android:id="@+id/f_tarifA"
@@ -66,7 +68,6 @@
         android:text="Tarif adulte : "
         android:textSize="16sp"
         android:layout_below="@id/f_description"
-
         android:layout_marginTop="16dp" />
 
     <WebView
@@ -76,7 +77,6 @@
         android:text="Tarif enfant : "
         android:textSize="16sp"
         android:layout_below="@id/f_tarifA"
-
         android:layout_marginTop="8dp" />
 
     <WebView
@@ -95,8 +95,50 @@
         android:text="Jours de fermeture : "
         android:textSize="16sp"
         android:layout_below="@id/f_horaires"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp" >
 
+    </WebView>
 
+    <!-- Formulaire commentaire -->
+
+    <EditText
+        android:id="@+id/textNewAvis"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/f_dayOff"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="Commentaires..." />
+
+    <TextView
+        android:id="@+id/labelNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textNewAvis"
+        android:layout_marginTop="10dp"
+        android:text="Note" />
+
+    <RatingBar
+        android:id="@+id/newNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textNewAvis"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Note"
+        android:isIndicator="false"
+        style="@style/RatingBarStyle" />
+
+    <!-- Bouton "Donner un avis" -->
+
+    <Button
+        android:id="@+id/btn_commenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newNote"
+        android:layout_marginTop="16dp"
+        android:text="Donner un avis" />
 
 </RelativeLayout>
+    </ScrollView>

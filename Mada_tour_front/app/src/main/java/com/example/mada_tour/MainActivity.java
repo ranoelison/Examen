@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -36,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.home) {
                 replaceFragment(new HomeFragment());
             } else if (itemId == R.id.activites) {
-               replaceFragment(new ActivitiesFragment());
+              // replaceFragment(new ActivitiesFragment());
                 //ici exemple comment appeler la fiche activite
                 //appel new instance pas le constructeur
-               // replaceFragment(new FicheActiviteFragment().newInstance("64ce0b8de7b9887a0eb711a1"));
+                replaceFragment(new FicheActiviteFragment().newInstance("64cf95cf648338184d19eb8c"));
             } else if (itemId == R.id.settings) {
                 replaceFragment(new SettingsFragment());
             } else if (itemId == R.id.login) {
@@ -56,4 +59,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
     }
+
 }

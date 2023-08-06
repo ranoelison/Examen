@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mada_tour.R;
-import com.example.mada_tour.controleur.LoginController;
+import com.example.mada_tour.controlleur.LoginController;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username, password;
