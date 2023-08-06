@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -36,14 +37,11 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private StringAdapter stringAdapter;
-    private List<String> stringList = new ArrayList<>();
+    private String base_url;
 
     public HomeFragment() {
         // Required empty public constructor
     }
-
-    VideoView videoView;
-
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -60,72 +58,50 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+//        return inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        VideoView videoView = rootView.findViewById(R.id.videoview);
+        videoView.setVideoPath("android.resource://" + requireActivity().getPackageName() + "/" + R.raw.background);
+
+        // Ajouter un MediaController pour permettre à l'utilisateur de contrôler la vidéo (play, pause, etc.)
+        MediaController mediaController = new MediaController(requireContext());
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
+
+        // Démarrer automatiquement la lecture de la vidéo
+        videoView.start();
+
+        return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.base_url = getActivity().getString(R.string.host);
 
-//        videoView = view.findViewById(R.id.videoview);
-//        Uri uri = Uri.parse("android:resource://"+getActivity().getPackageName()+"/"+R.raw.backgroundmdtrim);
-//        videoView.setVideoURI(uri);
-//        videoView.start();
-//
-//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mediaPlayer) {
-//                mediaPlayer.setLooping(true);
-//            }
-//        });
-
+        List<Destination> destinationList = new ArrayList<>();
         // Initialisez la RecyclerView et l'adapter
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        stringAdapter = new StringAdapter(stringList);
-        recyclerView.setAdapter(stringAdapter);
-
-        // Obtenez le tableau de String à partir de l'apiResponse
-        // par exemple : stringList = apiResponse.getStringList();
-        // Assurez-vous que stringList contient les String que vous voulez afficher
-        List<Destination> destinations = new ArrayList<>();
-        ActualiteController actctl = new ActualiteController(requireContext());
+        ActualiteController actctl = new ActualiteController(requireContext(),this.base_url);
         try{
             actctl.getDestinations(new DestinationCallback() {
                 @Override
                 public void onDestinationListReady(List<Destination> destinations) {
-                    for (Destination destination: destinations) {
-                        stringList.add(destination.getNom());
-                        stringList.add(destination.getType());
-                        Toast.makeText(getContext(), "NAME " + stringList.get(0), Toast.LENGTH_LONG).show();
-                        stringAdapter.setStringList(stringList);
-                        // Rafraîchissez l'adapter avec les nouvelles données
-                        stringAdapter.notifyDataSetChanged();
-                    }
+//                    destinationList = destinations;
+                    stringAdapter.setStringList(destinations);
+                    // Rafraîchissez l'adapter avec les nouvelles données
+                    stringAdapter.notifyDataSetChanged();
                 }
             });
         }
         catch (Exception exception){
             exception.printStackTrace();
         }
+        stringAdapter = new StringAdapter(destinationList,this, this.base_url);
+        recyclerView.setAdapter(stringAdapter);
 
     }
 
-//    @Override
-//    public void onStart() {
-//        videoView.start();
-//        super.onStart();
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        videoView.suspend();
-//        super.onPause();
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        videoView.stopPlayback();
-//        super.onDestroy();
-//    }
 }

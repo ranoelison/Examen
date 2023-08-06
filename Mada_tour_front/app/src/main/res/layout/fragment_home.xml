@@ -6,29 +6,29 @@
     tools:context=".HomeFragment"
     android:background="@color/white">
 
-<!--    <VideoView-->
-<!--        android:id="@+id/videoview"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="400dp"></VideoView>-->
+    <VideoView
+        android:id="@+id/videoview"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="400dp"></VideoView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="300dp"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="354dp"
             android:orientation="horizontal">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="350dp"
                 android:padding="8dp"
-                android:scrollbars="horizontal"
-                android:background="@color/design_default_color_error" >
-            </androidx.recyclerview.widget.RecyclerView>
+                android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

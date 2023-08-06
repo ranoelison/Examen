@@ -10,6 +10,7 @@ dotenv.config();
 const app = express();
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 app.listen(3000, () => {
   console.log("The server started on port 3000 !!!!!!");

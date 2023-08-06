@@ -22,12 +22,13 @@ import java.util.List;
 
 public class ActualiteController {
     private final Context context;
-    public ActualiteController(Context context){
+    public ActualiteController(Context context,String base_url){
         this.context = context;
+        this.base_url = base_url;
     }
     private RequestQueue mRequestQueue;
     //    A changer en l'adresse IP de l'ordi si API local
-    private String base_url = "http://192.168.1.176:3000";
+    private String base_url = "http://172.20.10.13:3000";
 
     public void getDestinations(DestinationCallback destinationCallback) {
         mRequestQueue = Volley.newRequestQueue(context);
