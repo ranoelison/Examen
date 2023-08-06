@@ -41,11 +41,11 @@ public class ActiviteController {
     private RequestQueue mRequestQueue;
 //    A changer en l'adresse IP de l'ordi si API local
 
-    public void getListeActivites(ActivityCallback callback){
+    public void getListeActivites(ActivityCallback callback,String filter){
         // RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(context);
         // String Request initialized
-        String url = base_url+"/activities";
+        String url = base_url+"/activities/"+filter;
         List<Activite> activities = new ArrayList<Activite>();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

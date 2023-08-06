@@ -172,8 +172,8 @@ module.exports = {
             if(req.params.filter){
                 let data = await ActiviteModel.find({
                     "$or": [
-                        {region: { "$regex": req.params.filter}},
-                        {type_activite: { "$regex": req.params.filter}},
+                        {region: { "$regex": req.params.filter,  "$options": "i" }},
+                        {type_activite: { "$regex": req.params.filter,  "$options": "i" }},
                     ]
                 });
                 res.status(200);

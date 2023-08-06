@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.mada_tour.controlleur.ActiviteController;
@@ -32,6 +33,7 @@ public class ActivitiesFragment extends Fragment {
     private String baseUrl;
     private RecyclerView recyclerView;
     private ActivitiesAdapter activitiesAdapter;
+    private SearchView searchView;
     public ActivitiesFragment() {
         // Required empty public constructor
     }
@@ -66,6 +68,7 @@ public class ActivitiesFragment extends Fragment {
         List<Activite> activitesListmp = new ArrayList<>();
         activitiesAdapter = new ActivitiesAdapter(activitesListmp,this, baseUrl);
         recyclerView.setAdapter(activitiesAdapter);
+        searchView = view.findViewById(R.id.searchActivity);
         try{
             actctl.getListeActivites(new ActivityCallback() {
                 @Override
@@ -73,12 +76,36 @@ public class ActivitiesFragment extends Fragment {
                     activitiesAdapter.setStringList(activites);
                     activitiesAdapter.notifyDataSetChanged();
                 }
-            });
+            },"");
         }
         catch (Exception exception){
             exception.printStackTrace();
             Toast.makeText(getContext(), "ERROR fetching activities :" + exception.getMessage(), Toast.LENGTH_LONG).show();
         }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                try{
+                    actctl.getListeActivites(new ActivityCallback() {
+                        @Override
+                        public void onActiviteListReady(List<Activite> activites) {
+                            activitiesAdapter.setStringList(activites);
+                            activitiesAdapter.notifyDataSetChanged();
+                        }
+                    },s);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "ERROR fetching activities :" + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 }
