@@ -16,8 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:scaleType="centerCrop"
-        android:src="/" />
+        android:scaleType="centerCrop" />
 
     <WebView
         android:id="@+id/f_nom_activite"

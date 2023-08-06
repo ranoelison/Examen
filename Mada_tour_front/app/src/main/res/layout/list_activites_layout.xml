@@ -32,6 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="HAHA eafsgsg"
+        android:background="@color/purple"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:typeface="sans"
         app:layout_constraintBottom_toBottomOf = "@id/mycard"
         app:layout_constraintLeft_toRightOf="@id/mycard"
         app:layout_constraintTop_toTopOf="@id/mycard"
@@ -40,9 +44,10 @@
     <TextView
         android:id="@+id/type_region"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginStart="16dp"
         android:text="REGION "
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf = "@id/mycard"
         app:layout_constraintLeft_toRightOf="@id/mycard"
         />

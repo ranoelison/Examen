@@ -164,4 +164,37 @@ module.exports = {
             res.status(500);
         }
     },
+
+    // Liste activites
+    getActivities : async function(req, res) {
+        try{
+            console.log('getFiltered Activities');
+            if(req.params.filter){
+                let data = await ActiviteModel.find({
+                    "$or": [
+                        {region: { "$regex": req.params.filter}},
+                        {type_activite: { "$regex": req.params.filter}},
+                    ]
+                });
+                res.status(200);
+                res.message = "OK";
+                res.json(data);
+            }
+            else{
+                let data = await ActiviteModel.find();
+                res.status(200);
+                res.message = "OK";
+                res.json(data);
+            }
+        }
+        catch(err){
+            console.log(err);
+            res.status(500);
+            res.send(err);
+        }
+    },
+
+    test : async function(req,res) {
+        res.send('test');
+    }
 };

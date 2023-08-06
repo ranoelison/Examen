@@ -47,7 +47,6 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringView
         String typeAndRegion = currentDestination.getType()+" dans la region de "+currentDestination.getRegion();
         holder.textViewTypeRegion.setText(typeAndRegion);
         String imageUrl = currentDestination.getImg_url();
-
         // Obtenez l'ID de la ressource drawable en utilisant le nom de l'image
         imageUrl = this.baseUrl+imageUrl;
         System.out.println("IMG"+imageUrl);
