@@ -30,11 +30,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 const router = require("./routes/router");
 
-// Narda Route
 app.use('/', indexRouter);
 
-// Nomena Route
-app.use(router);
+app.listen(3000, () => {
+  console.log("The server started on port 3000 !!!!!!");
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
