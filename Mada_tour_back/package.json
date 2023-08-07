@@ -8,9 +8,6 @@
     "start": "node ./bin/www"
   },
   "author": "RandriamoramananaNarda&&RanoelisonNomena",
-  "engines": {
-    "node": "18.16.0"
-  },
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
