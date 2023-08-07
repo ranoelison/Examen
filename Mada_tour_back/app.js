@@ -50,8 +50,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000|| process.env.PORT, () => {
-  console.log("Server is running.");
-});
+// app.listen(3000|| process.env.PORT, () => {
+//   console.log("Server is running.");
+// });
 
 module.exports = app;
