@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment"
-    android:background="@color/white">
+    android:orientation="vertical"
+    android:layout_marginBottom="75dp"
+    tools:context=".HomeFragment">
 
-    <VideoView
-        android:id="@+id/videoview"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginBottom="400dp"></VideoView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="300dp"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="354dp"
-            android:orientation="horizontal">
-
+            <VideoView
+                android:id="@+id/videoview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                ></VideoView>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="match_parent"
                 android:padding="8dp"
-                android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</FrameLayout>
+            >
+            </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

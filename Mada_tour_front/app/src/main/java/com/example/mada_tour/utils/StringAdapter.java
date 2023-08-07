@@ -12,15 +12,12 @@ import com.bumptech.glide.Glide;
 import com.example.mada_tour.R;
 import com.example.mada_tour.modele.Destination;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringViewHolder> {
     private List<Destination> destinations;
     private Fragment fragment;
-    private String baseUrl = "http://192.168.1.176:3000";
+    private String baseUrl;
 
     public StringAdapter(List<Destination> destinations, Fragment fragment,String baseUrl) {
         this.destinations = destinations;
