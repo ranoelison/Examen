@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mada_tour.HomeFragment;
 import com.example.mada_tour.R;
 import com.example.mada_tour.controlleur.LoginController;
 
@@ -125,8 +126,13 @@ public class LoginFragment extends Fragment {
         System.out.println("LOGINNNND "+username);
         LoginController loginController = new LoginController(getActivity());
         loginController.performLogin(username, password);
-        // Toast.makeText(LoginActivity.this, "Connexion réussie!", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(LoginActivity.this, "Connexion réussie!", Toast.LENGTH_SHORT).show();
+        HomeFragment fragmentHome = new HomeFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragmentHome);
+        fragmentTransaction.addToBackStack(null); // ajouter la transaction à la pile pour revenir en arrière
+        fragmentTransaction.commit();
     }
 
 }

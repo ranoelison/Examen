@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mada_tour.R;
+import com.example.mada_tour.utils.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,17 +58,17 @@ public class LoginController {
                                 // Connexion réussie, affichez le toast et stockez le token dans le local storage
                                 String token = response.getJSONObject("data").getString("token");
                                 saveTokenToLocalStorage(token);
-                               // showToast("Connexion réussie!");
+                                // showToast("Connexion réussie!");
                                 System.out.println("OK CONNEXION");
 
                             } else {
                                 // Afficher un message d'erreur de connexion échouée
-                              //  showToast("Connexion échouée");
+                                showToast("Connexion échouée");
                                 System.out.println("ECHEC CONNEXION ");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                           // showToast("Erreur lors de la réponse du serveur");
+                            showToast("Erreur lors de la réponse du serveur");
                         }
                     }
                 },
@@ -77,7 +78,7 @@ public class LoginController {
                         System.out.println("VOLLEY ERREUR ");
                         error.printStackTrace();
                         System.out.println("------------------------------------------------------------");
-//                        showToast("Erreur lors de la connexion");
+                        showToast("Erreur lors de la connexion");
                     }
                 }
         ) {
@@ -101,9 +102,10 @@ public class LoginController {
     // Dans votre méthode saveTokenToLocalStorage du LoginController
 
     private void saveTokenToLocalStorage(String token) {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+/*        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
-        editor.apply();
+        editor.apply();*/
+        SessionManager sessionManager  = new SessionManager(mContext);
+        sessionManager.saveToken(token);
     }
 }

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -11,8 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mada_tour.HomeFragment;
 import com.example.mada_tour.R;
+import com.example.mada_tour.fragments.InscriptionFragment;
 import com.example.mada_tour.notification.NotificationUtils;
+import com.example.mada_tour.utils.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,11 +69,13 @@ public class InscriptionController {
 
                                 String token = response.getJSONObject("data").getString("token");
                                 saveTokenToLocalStorage(token);
-                                //showToast("Connexion réussie!");
+                                showToast("Connecté");
                                 //--redirection vers dernier fragment used
+
                                 //notif
                                 NotificationUtils notificationUtils = new NotificationUtils();
                                 notificationUtils.showSignUpNotification(mContext);
+
 
                             } else {
                                 throw new Exception(
@@ -109,9 +117,11 @@ public class InscriptionController {
     // Dans votre méthode saveTokenToLocalStorage du LoginController
 
     private void saveTokenToLocalStorage(String token) {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+      /*  SharedPreferences sharedPreferences = mContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
-        editor.apply();
+        editor.apply();*/
+        SessionManager sessionManager  = new SessionManager(mContext);
+        sessionManager.saveToken(token);
     }
 }
