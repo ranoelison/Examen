@@ -88,20 +88,23 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Déconnexion");
         builder.setMessage("Voulez-vous vous déconnecter ?");
-        builder.setPositiveButton("Déconnexion", new DialogInterface.OnClickListener() {
+        builder.setPositiveButtonIcon(getResources().getDrawable(R.drawable.yes));
+        builder.setNegativeButtonIcon(getResources().getDrawable(R.drawable.no));
+        builder.setPositiveButton("", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Appeler la méthode de déconnexion ici
                 performLogout();
             }
         });
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
         builder.show();
+
     }
 
     private void performLogout() {
