@@ -27,6 +27,7 @@ import com.example.mada_tour.controlleur.FicheController;
 import com.example.mada_tour.modele.Activite;
 import com.example.mada_tour.modele.Avis;
 import com.example.mada_tour.utils.LangueMap;
+import com.example.mada_tour.utils.SessionManager;
 import com.example.mada_tour.utils.Utils;
 
 /**
@@ -69,7 +70,7 @@ public class FicheActiviteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Utils utils = new Utils(view.getContext());
+        SessionManager utils = new SessionManager(view.getContext());
         boolean isLoggedIn = utils.isConnected();
 
         btnCommenter = view.findViewById(R.id.btn_commenter);
@@ -98,9 +99,9 @@ public class FicheActiviteFragment extends Fragment {
                     // For example, you can send the comment to the server or save it locally.
                     // After submitting the comment, you can show a toast message to inform the user.
                     Toast.makeText(getActivity(), "Comment submitted", Toast.LENGTH_SHORT).show();
-                      avisVal = textNewAvis.getText().toString();
-                      noteVal= new Double(newNote.getRating());
-                      submitAvis(user_id,avisVal,noteVal);
+                    avisVal = textNewAvis.getText().toString();
+                    noteVal= new Double(newNote.getRating());
+                    submitAvis(user_id,avisVal,noteVal);
                     //= Math.round(rating);
                 }
             });
