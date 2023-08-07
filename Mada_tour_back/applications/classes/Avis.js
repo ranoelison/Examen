@@ -2,7 +2,7 @@ const util = require("../helpers/util.js");
 //const UtilisateursModel = require('../models/utilisateursModel.js');
 const ActiviteModel = require('../models/activiteModel.js');
 const AvisModel = require('../models/avisModel.js');
-
+const UtilisateurModel = require('../models/utilisateursModel.js');
 
 class Avis {
     _id;
@@ -95,6 +95,26 @@ class Avis {
         return  await newAvis.save().then().catch(err => { throw err });
     }
     static async listAvisByActivite(activite_id) {
+        try {
+            const avis = await AvisModel.find({ activite_id: activite_id }).sort({ date_submit: -1 }).exec();
+    
+            // Parcourir chaque avis pour mettre à jour l'attribut utilisateurs_id
+            const avisWithUsernames = await Promise.all(avis.map(async (avisItem) => {
+                const utilisateur = await UtilisateurModel.findOne({ _id: avisItem.utilisateurs_id });
+                if (utilisateur) {
+                    // Concaténer le nom et le prénom de l'utilisateur et mettre à jour l'attribut utilisateurs_id
+                    avisItem.utilisateurs_id = utilisateur.nom + ' ' + utilisateur.prenom;
+                }
+                return avisItem;
+            }));
+    
+            return avisWithUsernames;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
+    static async listAvisByActiviteRealData(activite_id) {
         try {
             const avis = await AvisModel.find({ activite_id: activite_id }).sort({date_submit:-1}).exec();
             return avis;
