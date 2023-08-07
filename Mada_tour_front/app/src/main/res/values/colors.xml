@@ -7,6 +7,8 @@
 
     <!--Light Color-->
     <color name="primaryBackgroundColor">#F5F7FB</color>
+    <color name="FicheBackgroundColor">#5CC3BA</color>
     <!--Night Color-->
     <color name="primaryBackgroundColorNight">#5A5656</color>
+    <color name="FicheBackgroundColorNight">#336561</color>
 </resources>
