@@ -158,6 +158,14 @@ public class Activite {
     public Activite() {
     }
 
+    public Activite(String id, List<LangueMap> nom, String type_activite, String region, String images_url) {
+        this.id = id;
+        this.nom = nom;
+        this.type_activite = type_activite;
+        this.region = region;
+        this.images_url = images_url;
+    }
+
     public Activite(String id, List<LangueMap> nom, String type_activite, String region,
                     String images_url, List<LangueMap> description, String tarifA,
                     String tarifE, String horaires, String dayOff) {

@@ -14,6 +14,25 @@ public class Avis {
     Number note;
     String contenu;
 
+    String date_submit;
+
+    public String getDate_submit() {
+        return date_submit;
+    }
+
+    public void setDate_submit(String date_submit) {
+        this.date_submit = date_submit;
+    }
+
+    public Avis(String id, String utilisateurs_id, String activite_id, Number note, String contenu, String date_submit) {
+        this.id = id;
+        this.utilisateurs_id = utilisateurs_id;
+        this.activite_id = activite_id;
+        this.note = note;
+        this.contenu = contenu;
+        this.date_submit = date_submit;
+    }
+
     public String getId() {
         return id;
     }

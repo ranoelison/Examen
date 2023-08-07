@@ -120,7 +120,7 @@
         android:layout_marginTop="10dp"
         android:text="Note" />
 
-    <RatingBar
+        <RatingBar
         android:id="@+id/newNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
 
     <!-- Bouton "Donner un avis" -->
 
-    <Button
+        <Button
         android:id="@+id/btn_commenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,5 +140,15 @@
         android:layout_marginTop="16dp"
         android:text="Donner un avis" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_voiravis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_commenter"
+            android:layout_marginTop="16dp"
+            android:text="Voir avis"
+            />
+
+
+    </RelativeLayout>
     </ScrollView>

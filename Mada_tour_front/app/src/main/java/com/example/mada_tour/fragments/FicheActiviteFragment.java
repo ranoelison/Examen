@@ -47,11 +47,11 @@ public class FicheActiviteFragment extends Fragment {
     private WebView f_description;
     private WebView f_tarifA, f_tarifE, f_horaires, f_dayOff;
     private ImageView f_profil_image;
-    private Button btnCommenter;//,submitAvis;
+    private Button btnCommenter,btnCheckAvis;//,submitAvis;
     private RatingBar newNote;
     private EditText textNewAvis;
 
-    // Ajoutez d'autres TextViews pour les autres attributs
+
     public static FicheActiviteFragment newInstance(String id_activite) {
         FicheActiviteFragment fragment = new FicheActiviteFragment();
         Bundle args = new Bundle();
@@ -73,10 +73,16 @@ public class FicheActiviteFragment extends Fragment {
         boolean isLoggedIn = utils.isConnected();
 
         btnCommenter = view.findViewById(R.id.btn_commenter);
+        btnCheckAvis = view.findViewById(R.id.btn_voiravis);
         newNote = view.findViewById(R.id.newNote);
         // submitAvis = view.findViewById(R.id.submitAvis);
         textNewAvis = view.findViewById(R.id.textNewAvis);
-
+        btnCheckAvis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectToListAvis();
+            }
+        });
         // Show/hide the input and validation button based on login status
         if (isLoggedIn) {
             user_id = utils.getToken().split("_")[0];
@@ -211,5 +217,13 @@ public class FicheActiviteFragment extends Fragment {
         Avis newComm = new Avis(user_id, this.id_activite, note, commentaire);
         FicheController ficheController = new FicheController(getActivity());
         ficheController.addAvis(newComm);
+    }
+    private  void redirectToListAvis(){
+        AvisActiviteFragment avisActiviteFragment = new AvisActiviteFragment().newInstance(this.id_activite);
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, avisActiviteFragment);
+        fragmentTransaction.addToBackStack(null); // ajouter la transaction à la pile pour revenir en arrière
+        fragmentTransaction.commit();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.mada_tour.controlleur;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,11 +11,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mada_tour.R;
 import com.example.mada_tour.modele.Activite;
 import com.example.mada_tour.modele.Avis;
+import com.example.mada_tour.modele.AvisCallback;
 import com.example.mada_tour.notification.NotificationUtils;
 import com.example.mada_tour.utils.LangueMap;
 
@@ -36,6 +39,50 @@ public class FicheController {
         base_url  = context.getString(R.string.base_url_activite);
     }
 
+    public void getActiviteAvisList(String activiteId, final AvisCallback callback) {
+        String url = base_url + "listeAvisActivite/" + activiteId;
+        System.out.println(url);
+        List<Avis> listAvis = new ArrayList<>();
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray data = response.getJSONArray("data");
+
+                    System.out.println("----------------REPONSE LISTE AVIS ACTIVITE------------------");
+                    System.out.println(data);
+                    System.out.println("----------------------------------------------------------");
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject avisObj = data.getJSONObject(i);
+
+                        String id = avisObj.getString("_id");
+                        String utilisateurs_id = avisObj.getString("utilisateurs_id");
+                        String activite_id = avisObj.getString("activite_id");
+                        Double note = avisObj.getDouble("note");
+                        String contenu = avisObj.getString("contenu");
+                        String date_pub = avisObj.getString("date_submit");
+
+                        Avis avis = new Avis(id, utilisateurs_id, activite_id, note, contenu,date_pub);
+                        listAvis.add(avis);
+                    }
+                    callback.onAvisListReady(listAvis);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, "Error parsing JSON response", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("TAG Volley API", "Error Volley API:" + error.toString());
+                Toast.makeText(context, "Failed to load listAvis :" + error, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
 
     public void getActiviteData(String activiteId, final VolleyCallback callback) {
         String url = base_url +"ficheActivite/"+ activiteId;
@@ -76,7 +123,6 @@ public class FicheController {
     }
 
     //  réponse JSON en objet Activite
-
 
     private Activite parseJsonResponse(JSONObject response) throws JSONException {
         // Extraire les données JSON nécessaires pour créer l'objet Activite

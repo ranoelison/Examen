@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.home) {
                 replaceFragment(new HomeFragment());
             } else if (itemId == R.id.activites) {
-              // replaceFragment(new ActivitiesFragment());
+                replaceFragment(new ActivitiesFragment());
                 //ici exemple comment appeler la fiche activite
                 //appel new instance pas le constructeur
-                replaceFragment(new FicheActiviteFragment().newInstance("64cf95cf648338184d19eb8c"));
+               // replaceFragment(new FicheActiviteFragment().newInstance("64cf95cf648338184d19eb8c"));
             } else if (itemId == R.id.settings) {
                 replaceFragment(new SettingsFragment());
             } else if (itemId == R.id.login) {

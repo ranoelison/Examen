@@ -4,11 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.AvisActiviteFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textViewMoyenneNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note : "
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
+        <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAvis"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+    </ScrollView>
 </FrameLayout>
