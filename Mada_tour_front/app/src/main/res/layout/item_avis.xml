@@ -1,0 +1,52 @@
+<!-- item_avis.xml -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:radius="8dp"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Contenu de l'avis -->
+        <TextView
+            android:id="@+id/textViewContenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Note de l'avis -->
+        <RatingBar
+            android:id="@+id/ratingBarNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Note"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="1.0"/>
+
+        <!-- Nom de l'utilisateur -->
+        <TextView
+            android:id="@+id/textViewUtilisateur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"/>
+
+        <!-- Date de publication -->
+        <TextView
+            android:id="@+id/textViewDatePublication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
