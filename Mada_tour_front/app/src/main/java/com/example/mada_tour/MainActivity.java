@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.mada_tour.databinding.ActivityMainBinding;
@@ -20,16 +22,27 @@ import com.example.mada_tour.notification.NotificationUtils;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    private SharedPreferences sharedPreferences;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // Vérifiez l'état actuel du switch lors de la création de l'activité
+        boolean isDarkModeEnabled = sharedPreferences.getBoolean("dark", false);
+        // Maintenant, "isDarkModeEnabled" contient l'état actuel du switch
+        if (isDarkModeEnabled) {
+            // Le mode sombre est activé
+            setTheme(R.style.NightTheme);
+        } else {
+            // Le mode sombre est désactivé
+            setTheme(R.style.LightTheme);
+        }
         NotificationHelper notifHelper = new NotificationHelper();
         notifHelper.createNotificationChannels(this);
         NotificationUtils notif = new NotificationUtils();
         notif.showNotification(this);
-        //
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());

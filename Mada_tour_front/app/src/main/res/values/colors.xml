@@ -4,4 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#5714ba</color>
     <color name="blue">#139ae8</color>
+
+    <!--Light Color-->
+    <color name="primaryBackgroundColor">#F5F7FB</color>
+    <!--Night Color-->
+    <color name="primaryBackgroundColorNight">#5A5656</color>
+
 </resources>
