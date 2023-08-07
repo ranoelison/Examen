@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mada_tour.HomeFragment;
 import com.example.mada_tour.R;
 import com.example.mada_tour.controlleur.InscriptionController;
 import com.example.mada_tour.controlleur.LoginController;
@@ -137,8 +140,8 @@ public class InscriptionFragment extends Fragment {
                 int jour = calendar.get(Calendar.DAY_OF_MONTH);
                 int mois = calendar.get(Calendar.MONTH) + 1; // Les mois dans Calendar commencent à 0, donc on ajoute 1
                 int annee = calendar.get(Calendar.YEAR);
-                date_naissance = jour + "/" + mois + "/" + annee;
-               //peut ajouter condition qualif champ
+                date_naissance = annee+"-" + mois + "-" + jour;
+                //peut ajouter condition qualif champ
                 performSignUp(nomVal,prenomVal,mailVal,passwordVal,confPasswordVal,date_naissance);
             }
         });
@@ -146,7 +149,12 @@ public class InscriptionFragment extends Fragment {
     private void performSignUp(String nom, String prenom ,String mail,String password,String confPassword,String date_naissance) {
         InscriptionController inscriptionController = new InscriptionController(getActivity());
         inscriptionController.performSignUp(  nom,  prenom , mail, password, confPassword, date_naissance);
-
+        HomeFragment fragmentHome = new HomeFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragmentHome);
+        fragmentTransaction.addToBackStack(null); // ajouter la transaction à la pile pour revenir en arrière
+        fragmentTransaction.commit();
     }
     private void showDatePickerDialog() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
