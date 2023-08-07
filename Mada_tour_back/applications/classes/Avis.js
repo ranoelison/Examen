@@ -98,6 +98,32 @@ class Avis {
         try {
             const avis = await AvisModel.find({ activite_id: activite_id }).sort({ date_submit: -1 }).exec();
     
+            // Obtenir tous les _id des utilisateurs pour lesquels nous devons récupérer les noms
+            const utilisateursIds = avis.map((avisItem) => avisItem.utilisateurs_id);
+    
+            // Récupérer tous les utilisateurs en une seule requête
+            const utilisateurs = await UtilisateurModel.find({ _id: { $in: utilisateursIds } });
+    
+            // Créer un dictionnaire pour associer l'_id de l'utilisateur à son nom complet
+            const utilisateursMap = {};
+            utilisateurs.forEach((utilisateur) => {
+                utilisateursMap[utilisateur._id] = utilisateur.nom + ' ' + utilisateur.prenom;
+            });
+    
+            // Mettre à jour l'attribut utilisateurs_id pour chaque avis en utilisant le dictionnaire créé
+            avis.forEach((avisItem) => {
+                avisItem.utilisateurs_id = utilisateursMap[avisItem.utilisateurs_id];
+            });
+    
+            return avis;
+        } catch (error) {
+            throw error;
+        }
+    }
+   /* static async listAvisByActivite(activite_id) {
+        try {
+            const avis = await AvisModel.find({ activite_id: activite_id }).sort({ date_submit: -1 }).exec();
+    
             // Parcourir chaque avis pour mettre à jour l'attribut utilisateurs_id
             const avisWithUsernames = await Promise.all(avis.map(async (avisItem) => {
                 const utilisateur = await UtilisateurModel.findOne({ _id: avisItem.utilisateurs_id });
@@ -113,7 +139,7 @@ class Avis {
             throw error;
         }
     }
-    
+    */
     static async listAvisByActiviteRealData(activite_id) {
         try {
             const avis = await AvisModel.find({ activite_id: activite_id }).sort({date_submit:-1}).exec();
